@@ -8,10 +8,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {SharedModule} from './shared/shared.module';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {NavigationComponent} from './navigation/navigation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DashboardComponent,
+    NavigationComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +26,8 @@ import {AppComponent} from './app.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
