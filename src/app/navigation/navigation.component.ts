@@ -10,12 +10,17 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class NavigationComponent {
 
+  hideSideNav = false;
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
-      map(result => result.matches),
+      map(result => this.hideSideNav = true),
       shareReplay()
     );
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
+  toggleSideNav(): void {
+      this.hideSideNav = !this.hideSideNav;
+  }
 }

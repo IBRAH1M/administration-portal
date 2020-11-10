@@ -33,10 +33,11 @@ export class HasAccessDirective implements OnInit, OnDestroy {
   }
 
   checkAccess(): void {
-    this.neededAccessAuthorities.forEach((accessAuthority: string) => {
+    this.neededAccessAuthorities.every((accessAuthority: string) => {
       const foundMatch = this.authorities$.find(authority => authority.authority.toUpperCase() === accessAuthority.toUpperCase());
       if (foundMatch) {
         this.viewContainer.createEmbeddedView(this.templateRef);
+        return;
 
       } else {
         this.viewContainer.clear();

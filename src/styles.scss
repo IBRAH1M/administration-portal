@@ -2,3 +2,15 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html { font-size: .5rem;}
+
+@media (min-width: 544px) { html { font-size: .7rem; } }
+
+@media (min-width: 768px) { html { font-size: .9rem; } }
+
+@media (min-width: 992px) { html { font-size: 1rem; } }
+
+@media (min-width: 1200px) { html { font-size: 1.1rem; } }
+
+@media (min-width: 1440px) { html { font-size: 1.2rem; } }

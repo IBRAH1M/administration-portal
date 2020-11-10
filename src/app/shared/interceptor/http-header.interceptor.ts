@@ -20,7 +20,7 @@ export class HttpHeaderInterceptor implements HttpInterceptor {
           'Content-Type': 'application/json; charset=utf-8',
           'Accept': 'application/json',
           // 'Authorization': `${tokenType} ${accessToken}`
-          'Authorization': `bearer e1745cf0-1fd0-43a6-be0a-15a3adc93ce6`
+          'Authorization': `bearer 40a7fe25-e84d-4db3-97bb-123610140604`
         }
       });
     }

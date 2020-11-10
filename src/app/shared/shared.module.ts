@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 
-import {MaterialModule} from './material/material.module';
+// import {MaterialModule} from './material/material.module';
 import {ThemeChangeService} from './service/theme-change.service';
 import {SharedRoutingModule} from './shared-routing.module';
 import {AuthenticationService} from './service/authentication.service';
@@ -14,12 +14,10 @@ import {httpInterceptorProviders} from './interceptor';
     ConfirmationComponent
   ],
   exports: [
-    MaterialModule,
     HasAccessDirective,
     ConfirmationComponent
   ],
   imports: [
-    MaterialModule,
     SharedRoutingModule
   ],
   providers: [

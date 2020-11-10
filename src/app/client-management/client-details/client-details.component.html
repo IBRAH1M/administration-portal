@@ -1,0 +1,359 @@
+<div class="display-3 mb-5 mt-2"
+     i18n="Client management | A page for add, edit or delete clients">
+  Client Management
+</div>
+
+<div class="row d-flex justify-content-between flex-nowrap mb-2">
+  <div class="col">
+    <div class="h3 mb-4"
+         *ngIf="viewMode"
+         i18n="Client Details | Page title ">
+      Client Details
+    </div>
+    <div class="h3 mb-4"
+         *ngIf="editMode"
+         i18n="Client Edit | Page title ">
+      Edit Client
+    </div>
+    <!--          *ngIf="newMode"-->
+    <div class="h3 mb-4"
+         i18n="Client New | Page title ">
+      Create New Client
+    </div>
+  </div>
+
+  <div class="col-xs-auto mr-2">
+    <div *ngIf="viewMode">
+      <button class="btn btn-primary rounded-0 text-nowrap m-1"
+              *appHasAccess="['UPDATE_CLIENT']"
+              (click)="editClient()"
+              i18n="Edit client action button | A button to move to edit client page">
+        Edit Client
+      </button>
+    </div>
+    <div *ngIf="viewMode || editMode">
+      <button class="btn btn-primary rounded-0 text-nowrap"
+              *appHasAccess="['DELETE_CLIENT']"
+              (click)="deleteClient()"
+              i18n="Delete client action button | A button to move to delete client page">
+        Delete Client
+      </button>
+    </div>
+    <!--      <div *ngIf="newMode || editMode">-->
+    <button class="btn btn-primary rounded-0 text-nowrap m-1"
+            *appHasAccess="['CREATE_CLIENT','UPDATE_CLIENT']"
+            (click)="saveClient()"
+            i18n="Save client action button | A button to save changes done to client">
+      Save Client
+    </button>
+    <!--      </div>-->
+    <!--      <div *ngIf="newMode || editMode">-->
+    <a class="btn btn-primary rounded-0 text-nowrap m-1"
+       [routerLink]="['../']"
+       i18n="Cancel action button | A button to cancel and go back to previous page">
+      Cancel
+    </a>
+    <!--      </div>-->
+  </div>
+</div>
+
+<div class="border p-2">
+  <form #form="ngForm" novalidate>
+    <!--  Basic Info-->
+    <div class="h5 my-4"
+         i18n="Basic Information | Form section title for basic info">
+      Basic Information
+    </div>
+    <hr/>
+    <div class="form-group form-row">
+      <label for="name"
+             class="col-2 col-form-label text-nowrap"
+             i18n="Client English name | English client name">
+        English Name
+      </label>
+      <div class="col-10">
+        <input required
+               [disabled]="viewMode"
+               [(ngModel)]="client.name"
+               [value]="client?.name"
+               #nameEng="ngModel"
+               class="form-control"
+               id="name"
+               name="name"
+               type="text"
+               i18n-placeholder="Input field placeholder | The client English name"
+               placeholder="Client English name">
+        <small id="nameHint"
+               *ngIf="(!nameEng.invalid) || (!nameEng.dirty) && (newMode || editMode)"
+               class="form-text text-muted"
+               i18n="Client English Name | The client English name hint">
+          Client English Name
+        </small>
+        <div *ngIf="nameEng.invalid && (nameEng.dirty || nameEng.touched)"
+             class="text-danger">
+          <div *ngIf="nameEng.errors.required">
+            Name is required.
+          </div>
+          <div *ngIf="nameEng.errors.errorCode == '123'">
+            Server Error.
+          </div>
+          <div *ngIf="nameEng.errors.errorCode == '409'">
+            Value is already in use.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form-row">
+      <label for="nameAr"
+             class="col-2 col-form-label text-nowrap"
+             i18n="Client Arabic name | Arabic client name">Arabic Name
+      </label>
+      <div class="col">
+        <input required
+               [disabled]="viewMode"
+               [(ngModel)]="client.nameAr"
+               [value]="client?.nameAr"
+               #nameAr="ngModel"
+               class="form-control"
+               id="nameAr"
+               name="nameAr"
+               type="text"
+               i18n-placeholder="Input field placeholder | The client Arabic name"
+               placeholder="Client Arabic name">
+        <small id="nameArHint"
+               *ngIf="(!nameEng.invalid) || (!nameEng.dirty) && (newMode || editMode)"
+               class="form-text text-muted"
+               i18n="Client Arabic Name | The client Arabic name hint">
+          Client Arabic Name
+        </small>
+        <div *ngIf="nameAr.invalid && (nameAr.dirty || nameAr.touched)"
+             class="text-danger">
+          <div *ngIf="nameAr.errors.required">
+            Arabic name is required.
+          </div>
+          <div *ngIf="nameAr.errors.errorCode == '409'">
+            Value is already in use.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--  Contact Info-->
+    <div class="h5 my-4"
+         i18n="Contact Information | Form section title for contact info">
+      Contact Information
+    </div>
+    <hr/>
+    <div class="form-group form-row">
+      <label for="address"
+             class="col-2 col-form-label text-nowrap"
+             i18n="Client address | The client address ">Client address
+      </label>
+      <div class="col">
+        <input required
+               [disabled]="viewMode"
+               [(ngModel)]="client.contactInfo.address"
+               [value]="client?.contactInfo?.address"
+               class="form-control"
+               id="address"
+               name="address"
+               type="text"
+               i18n-placeholder="Input field placeholder | The client address placeholder"
+               placeholder="Client address">
+        <small id="addressHint"
+               *ngIf="newMode || editMode"
+               class="form-text text-muted"
+               i18n="Client Address | The client address hint">
+          Client address
+        </small>
+      </div>
+    </div>
+    <div class="form-group form-row">
+      <label for="phone_number"
+             class="col-2 col-form-label text-nowrap"
+             i18n="Client phone | The client phone ">Client phone
+      </label>
+      <div class="col">
+        <input required
+               [disabled]="viewMode"
+               [(ngModel)]="client.contactInfo.phone_number"
+               [value]="client?.contactInfo?.phone_number"
+               class="form-control"
+               id="phone_number"
+               name="phone_number"
+               type="number"
+               i18n-placeholder="Input field placeholder | The client phone placeholder"
+               placeholder="Client phone">
+        <small id="phone_numberHint"
+               *ngIf="newMode || editMode"
+               class="form-text text-muted"
+               i18n="Client phone | The client phone">
+          Client phone
+        </small>
+      </div>
+    </div>
+    <div class="form-group form-row">
+      <label for="email"
+             class="col-2 col-form-label text-nowrap"
+             i18n="Client email | The client email ">Client email
+      </label>
+      <div class="col">
+        <input required
+               [disabled]="viewMode"
+               [(ngModel)]="client.contactInfo.email"
+               [value]="client?.contactInfo?.email"
+               class="form-control"
+               id="email"
+               name="email"
+               type="email"
+               i18n-placeholder="Input field placeholder | The client email placeholder"
+               placeholder="Client email">
+        <small id="emailHint"
+               *ngIf="newMode || editMode"
+               class="form-text text-muted"
+               i18n="Client email | The client email">
+          Client email
+        </small>
+      </div>
+    </div>
+
+    <!--  System Info-->
+    <div *ngIf="viewMode" class="row m-0">
+      <div class="h5 my-4"
+           i18n="System Information | Form section title for system info">
+        System Information
+      </div>
+      <hr/>
+
+      <div class="form-group form-row">
+        <label for="createdBy"
+               class="col-2 col-form-label text-nowrap"
+               i18n="Client created by audit info | The client created by user">Client Created By
+        </label>
+        <div class="col">
+          <input required
+                 class="form-control"
+                 id="createdBy"
+                 name="createdBy"
+                 [disabled]="true"
+                 [(ngModel)]="client.createdBy"
+                 [value]="client?.createdBy">
+        </div>
+      </div>
+
+      <div class="form-group form-row">
+        <label for="createdDate"
+               class="col-2 col-form-label text-nowrap"
+               i18n="Client created date audit info | The client created date">Client Date
+        </label>
+        <div class="col">
+          <input required
+                 class="form-control"
+                 id="createdDate"
+                 name="createdDate"
+                 [disabled]="true"
+                 [(ngModel)]="client.createdDate"
+                 [value]="client?.createdDate">
+        </div>
+      </div>
+    </div>
+
+    <!-- Client Settings-->
+    <div class="h5 my-4"
+         i18n="Client Settings | Form section title for setting details">
+      Client Settings
+    </div>
+    <hr/>
+    <div class="form-group form-row">
+      <label class="col-2 col-form-label text-nowrap"
+             for="enabled"
+             i18n="Enable Client | Toggle to enable/disable the client">Enable Client
+      </label>
+      <div class="col">
+        <label class="switch">
+          <input [checked]="client?.enabled"
+                 [disabled]="viewMode"
+                 type="checkbox"
+                 id="enabled">
+          <span class="slider"></span>
+        </label>
+        <small id="enabledHint"
+               *ngIf="newMode || editMode"
+               class="form-text text-muted"
+               i18n="Enable or Disable Client | Enabled clients will be able to use the system">
+          Enabled clients will be able to use the system
+        </small>
+      </div>
+    </div>
+    <div class="form-group form-row">
+      <label class="col-2 col-form-label text-nowrap"
+             for="activity"
+             i18n="Client activity selection list| Dropdown list to select client activity">Client Activity
+      </label>
+      <div class="col"><select required
+                               [disabled]="viewMode"
+                               [(ngModel)]="client.activity.id"
+                               class="form-control"
+                               name="activity"
+                               id="activity">
+        <option *ngIf="viewMode && client?.activity"
+                selected
+                [value]="client?.activity">{{client?.activity.name}}
+        </option>
+        <option *ngIf="editMode && client?.activity"
+                selected
+                [value]="client?.activity">{{client?.activity.name}}
+        </option>
+        <option *ngFor="let activity of activities" [value]="activity.id">{{activity.name}}</option>
+      </select></div>
+      <small id="activityHint"
+             *ngIf="newMode || editMode"
+             class="form-text text-muted"
+             i18n="Client activity selection type hint | Dropdown list to select client activity">
+        Client activity will be affect the system naming e.g. menus
+      </small>
+    </div>
+    <div class="form-group form-row">
+      <label class="col-2 col-form-label text-nowrap"
+             i18n="Client subscriptions table| Client subscriptions section showing all subscriptions in a table">
+        Client Subscriptions
+      </label>
+      <div class="col custom-control">
+        <table class="table">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Bundle</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Client Customizations-->
+    <div class="h5 my-4"
+         i18n="Client Customizations | Form section title for client customizations">
+      Client Customizations
+    </div>
+    <hr/>
+    <div class="form-group form-row">
+      <label class="col-2 col-form-label text-nowrap"
+             i18n="Client subscriptions table| Client subscriptions section showing all subscriptions in a table">
+        property1
+      </label>
+      <div class="col">
+        <span>property1 value</span>
+      </div>
+    </div>
+  </form>
+</div>

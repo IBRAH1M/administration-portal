@@ -1,30 +1,37 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item href="#" [routerLink]="['dashboard']" i18n="Dashboard link | side menu tab">Dashboard</a>
-      <a mat-list-item href="#" [routerLink]="['client-management']" i18n="Client management link | side menu tab">Client Management</a>
-      <a mat-list-item href="#">Link 3</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+<div class="d-flex" [ngClass]="{'toggled':hideSideNav}" id="wrapper">
+
+  <div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Start Bootstrap</div>
+    <div class="list-group list-group-flush">
+      <a href="#"
+         class="list-group-item list-group-item-action bg-light"
+         [routerLink]="['dashboard']"
+         i18n="Dashboard link | side menu tab">Dashboard
+      </a>
+      <a href="#"
+         class="list-group-item list-group-item-action bg-light"
+         [routerLink]="['client-management']"
+         [state]="{new: true}"
+         i18n="Client management link | side menu tab">Client Management
+      </a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+      <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+    </div>
+  </div>
+
+  <div id="page-content-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <button class="btn btn-primary"
+              id="menu-toggle"
+              (click)="toggleSideNav()">Toggle Menu
       </button>
-      <span>administration-portal</span>
-    </mat-toolbar>
-    <!-- Add Content Here -->
-    <div class="container">
+    </nav>
+
+    <div class="container-fluid">
       <router-outlet></router-outlet>
     </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </div>
+</div>

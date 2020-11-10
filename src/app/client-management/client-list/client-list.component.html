@@ -1,0 +1,123 @@
+<div class="display-3 mb-5 mt-2"
+     i18n="Client management | A page for add, edit or delete clients">Client Management
+</div>
+<div class="h3 mb-4"
+     i18n="List clients page | A page title">Clients List
+</div>
+
+<div class="border p-3">
+  <!--  Search box form-->
+  <form>
+    <div class="form-row d-flex justify-content-between flex-nowrap mb-2">
+      <div class="col">
+        <div class="form-group">
+          <label for="staticEmail2" class="sr-only"></label>
+          <input type="text"
+                 #input
+                 class="form-control-plaintext rounded-0 border-bottom"
+                 id="staticEmail2"
+                 i18n="Filter clients list | Search by clients name or other fields"
+                 placeholder="  Search term .....">
+        </div>
+      </div>
+      <div class="col-xs-auto d-flex justify-content-end">
+        <button type="submit"
+                class="btn btn-primary mb-2 mt-2 rounded-0 text-nowrap"
+                i18n="Button to create new client | Navigation button to create new client view"
+                *appHasAccess="['CREATE_CLIENT']"
+                [routerLink]="['client-details']"
+                [state]="{new: true}">Create Client
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!--  <div [ngClass]="{'loading-shade': (dataLoading | async)}">-->
+  <!--    <mat-spinner *ngIf="(dataLoading | async)"></mat-spinner>-->
+  <!--  </div>-->
+
+  <div *ngIf="clientsPage?.empty"
+       class="row h1">
+    <h1 i18n="No Data | text displayed when server response contain empty data set">NO DATA!</h1>
+  </div>
+
+  <!-- Clients Table -->
+  <div class="table-responsive"
+       [ngClass]="{'hidden': clientsPage?.empty}">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col"
+            i18n="Table column header | Display english name">English Name
+        </th>
+        <th scope="col"
+            i18n="Table column header | Display arabic name">Arabic Name
+        </th>
+        <th scope="col"
+            i18n="Table column header | Display action option (edit, delete & view)">Actions
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let client of clientsPage?.content;let i=index">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{client.name}}</td>
+        <td>{{client.nameAr}}</td>
+        <td>
+          <span>view</span>
+          <span>edit</span>
+          <span>delete</span>
+        </td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--  Pagination -->
+  <div class="d-flex flex-row justify-content-between align-items-center">
+    <div>
+      <span>Showing {{clientsPage?.numberOfElements}} of {{clientsPage?.totalElements}} clients</span>
+    </div>
+    <div class="d-flex flex-row">
+      <div class="dropdown show">
+        <a class="btn dropdown-toggle"
+           href="#" role="button"
+           id="page-size"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+          {{clientsPage?.size}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="page-size">
+          <a class="dropdown-item" (click)="loadData(0,25,'',input.value)">25</a>
+          <a class="dropdown-item" (click)="loadData(0,50,'',input.value)">50</a>
+          <a class="dropdown-item" (click)="loadData(0,75,'',input.value)">75</a>
+        </div>
+      </div>
+
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li class="page-item" [ngClass]="{'disabled': clientsPage?.first}">
+            <a class="page-link" (click)="loadData(clientsPage?.number-1,clientsPage?.size)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">
+              {{clientsPage?.number + 1}}
+            </a>
+          </li>
+          <li class="page-item" [ngClass]="{'disabled': clientsPage?.last}">
+            <a class="page-link" (click)="loadData(clientsPage?.number+1,clientsPage?.size)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
