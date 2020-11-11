@@ -15,8 +15,8 @@
          i18n="Client Edit | Page title ">
       Edit Client
     </div>
-    <!--          *ngIf="newMode"-->
     <div class="h3 mb-4"
+         *ngIf="newMode"
          i18n="Client New | Page title ">
       Create New Client
     </div>
@@ -39,21 +39,21 @@
         Delete Client
       </button>
     </div>
-    <!--      <div *ngIf="newMode || editMode">-->
-    <button class="btn btn-primary rounded-0 text-nowrap m-1"
-            *appHasAccess="['CREATE_CLIENT','UPDATE_CLIENT']"
-            (click)="saveClient()"
-            i18n="Save client action button | A button to save changes done to client">
-      Save Client
-    </button>
-    <!--      </div>-->
-    <!--      <div *ngIf="newMode || editMode">-->
-    <a class="btn btn-primary rounded-0 text-nowrap m-1"
-       [routerLink]="['../']"
-       i18n="Cancel action button | A button to cancel and go back to previous page">
-      Cancel
-    </a>
-    <!--      </div>-->
+    <div *ngIf="newMode || editMode">
+      <button class="btn btn-primary rounded-0 text-nowrap m-1"
+              *appHasAccess="['CREATE_CLIENT','UPDATE_CLIENT']"
+              (click)="saveClient()"
+              i18n="Save client action button | A button to save changes done to client">
+        Save Client
+      </button>
+    </div>
+    <div *ngIf="newMode || editMode">
+      <a class="btn btn-primary rounded-0 text-nowrap m-1"
+         [routerLink]="['../']"
+         i18n="Cancel action button | A button to cancel and go back to previous page">
+        Cancel
+      </a>
+    </div>
   </div>
 </div>
 
@@ -284,34 +284,6 @@
           Enabled clients will be able to use the system
         </small>
       </div>
-    </div>
-    <div class="form-group form-row">
-      <label class="col-2 col-form-label text-nowrap"
-             for="activity"
-             i18n="Client activity selection list| Dropdown list to select client activity">Client Activity
-      </label>
-      <div class="col"><select required
-                               [disabled]="viewMode"
-                               [(ngModel)]="client.activity.id"
-                               class="form-control"
-                               name="activity"
-                               id="activity">
-        <option *ngIf="viewMode && client?.activity"
-                selected
-                [value]="client?.activity">{{client?.activity.name}}
-        </option>
-        <option *ngIf="editMode && client?.activity"
-                selected
-                [value]="client?.activity">{{client?.activity.name}}
-        </option>
-        <option *ngFor="let activity of activities" [value]="activity.id">{{activity.name}}</option>
-      </select></div>
-      <small id="activityHint"
-             *ngIf="newMode || editMode"
-             class="form-text text-muted"
-             i18n="Client activity selection type hint | Dropdown list to select client activity">
-        Client activity will be affect the system naming e.g. menus
-      </small>
     </div>
     <div class="form-group form-row">
       <label class="col-2 col-form-label text-nowrap"

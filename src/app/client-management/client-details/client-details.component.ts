@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 
 import {Client} from '../client.model';
-import {ClientManagementService} from '../client-management.service';
+import {ClientManagementServiceClient} from '../client-management.service.client';
 import {Activity} from '../../activity-management/activity.modle';
 import {Page} from '../../shared/model/page.model';
 import {NgForm} from '@angular/forms';
@@ -22,7 +22,7 @@ export class ClientDetailsComponent implements OnInit {
   activities: Activity[];
 
   constructor(private router: Router,
-              private clientManagementClientService: ClientManagementService) {
+              private clientManagementClientService: ClientManagementServiceClient) {
   }
 
   ngOnInit() {

@@ -3,7 +3,7 @@ import {BehaviorSubject, fromEvent, of} from 'rxjs';
 import {catchError, debounceTime, distinctUntilChanged, finalize} from 'rxjs/operators';
 
 import {Client} from '../client.model';
-import {ClientManagementService} from '../client-management.service';
+import {ClientManagementServiceClient} from '../client-management.service.client';
 import {Page} from '../../shared/model/page.model';
 
 @Component({
@@ -19,7 +19,7 @@ export class ClientListComponent implements OnInit, AfterViewInit {
 
   constructor(@Inject(LOCALE_ID) public localeId: string,
               // public dialog: MatDialog,
-              private clientManagementClientService: ClientManagementService) {
+              private clientManagementClientService: ClientManagementServiceClient) {
   }
 
   ngOnInit() {
